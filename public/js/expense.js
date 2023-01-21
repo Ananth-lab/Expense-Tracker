@@ -110,8 +110,10 @@ premiumBtn.addEventListener("click", async (e) => {
             }, { headers: { "authorization": token } })
             alert("You are now a premium user");
             localStorage.setItem("token", result.data.token);
-            premiumBtn.style.display = "hidden";
             premium.append(document.createTextNode("PREMIUM"));
+            premiumBtn.style.display = "none";
+            leaderBoardDiv.style.display = "block";
+            location.reload();
 
         }
     }
