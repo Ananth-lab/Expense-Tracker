@@ -1,0 +1,167 @@
+#error {
+    color: red;
+    width: 50%;
+    margin: auto;
+    padding: auto;
+    text-align: center;
+}
+
+body {
+	font-family: 'Montserrat', sans-serif;
+	color: #1f2933;
+	background-size: cover;
+}
+h1 {
+	text-align: center;
+	margin: 0.5rem auto;
+	font-weight: 800;
+	font-size: 40px;
+	color: #ffffff;
+	padding-bottom: 1rem;
+}
+
+form,.leader-board {
+	max-width :500px;
+	margin : 2rem auto;
+	padding: 1rem;
+	border-radius: 1rem;
+	background-image :linear-gradient(rgb(14, 196, 252), pink);
+	background-size: cover;
+	box-shadow : 1rem -1rem 5rem rgb(39, 224, 248) ;
+}
+
+#switch{
+	display: block;
+	color:blue;
+	text-align: center;
+	margin :1rem auto;
+}
+
+.password-reset-link{
+	display: none;
+	color:blue;
+	text-align: center;
+	margin :1rem auto;
+}
+
+.file-link{
+	color:blue;
+
+}
+
+
+label,
+input {
+    display: block;
+    width: 50%;
+    margin: 8px auto;
+}
+
+.sub-button, .premium-button,.leader-board-btn,.forgot-password-submit-btn, .report-download,.file-audit {
+	font-size: 16px;
+	display: block;
+	width: 30%;
+	margin:  20px auto;
+	padding: 6px 6px;
+	border-radius: 10px;
+	color:  #ffffff;
+	background-color: rgb(17, 0, 255);
+	border: 2px solid #3b82f6;
+	cursor: pointer;
+	text-align: center;
+	transition: all 250ms;
+}
+
+a {
+    list-style: none;
+    color: rgb(255, 255, 255);
+}
+
+select {
+    margin: auto;
+    width : 50%;
+    display: block;
+    height: 1.5rem;;
+}
+
+
+.footer{
+	margin : auto;
+	max-width : 500px;
+	background-image :linear-gradient(rgb(14, 196, 252), pink);
+	text-align: center;
+	box-shadow : -1rem 1rem 5rem rgb(39, 224, 248) ;
+	border-radius: 1rem;
+}
+.footer-links{
+	padding:1%;
+	padding: 2rem 0;
+}
+li{
+	display:inline;
+	padding :1rem;
+	
+}
+img{
+	width : 3rem;
+	height : 3rem;
+
+}
+.expense-list, .leader-board-list, .file-audit-list{
+	overflow: scroll;
+	text-overflow: ellipsis;
+	background-color: #fff;
+	display: block;
+	text-align: left;
+	margin: 8px;
+	box-shadow : -1rem 1rem 5rem rgb(39, 224, 248) ;
+	border-radius: 10px;
+}
+
+.delete-btn{
+	float: right;
+	color:  #ffffff;
+	background-color: red;
+	cursor: pointer;
+	text-align: center;
+	transition: all 250ms;
+}
+
+#premium {
+	text-align: right;
+}
+
+#premium-btn{
+	display: none;
+}
+
+.leader-board, .expenses-per-page-div{
+	display: none;
+}
+
+.pagination-btn,.set-expense-per-row{
+	border-radius: 5px;
+	color:  #ffffff;
+	background-color: rgb(17, 0, 255);
+	border: 2px solid #3b82f6;
+	cursor: pointer;
+	text-align: center;
+	transition: all 250ms;
+	padding:.5rem;
+	margin : .5rem;
+}
+
+#pagination{
+	text-align: center;
+}
+
+#expense-opt{
+	display: inline;
+	margin: 1rem;
+	width : 10%;
+}
+
+.expenses-per-page-div{
+	text-align: right;
+	margin :auto;
+}
