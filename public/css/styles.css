@@ -72,6 +72,21 @@ input {
 	transition: all 250ms;
 }
 
+.logout-btn {
+	font-size: 16px;
+	display: block;
+	width: 30%;
+	margin:  20px auto;
+	padding: 6px 6px;
+	border-radius: 10px;
+	color:  #ffffff;
+	background-color: rgb(17, 0, 255);
+	border: 2px solid #3b82f6;
+	cursor: pointer;
+	text-align: center;
+	transition: all 250ms;
+}
+
 a {
     list-style: none;
     color: rgb(255, 255, 255);

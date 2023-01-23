@@ -48,8 +48,6 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use(helmet());
-
 //app.use(compression());
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, "access.log"), { flags: "a" })
@@ -69,6 +67,12 @@ app.use("/expense", expenseRoutes);
 app.use("/get-premium", purchaseRoutes);
 
 app.use("/premium", premiumRoutes);
+
+// app.use(helmet());
+
+app.use((req,res) => {
+  res.sendFile(path.join(__dirname, `public/${req.url}`))
+})
 
 User.hasMany(Expense, {
   foreignKey: 'userId',

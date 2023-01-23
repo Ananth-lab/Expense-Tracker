@@ -11,7 +11,7 @@ const fileAudit = document.querySelector(".file-audit");
 const pagination = document.querySelector("#pagination");
 const perPageBtn = document.querySelector(".set-expense-per-row");
 const paginationDiv = document.querySelector(".expenses-per-page-div");
-
+const logOutBtn = document.querySelector(".logout-btn")
 perPageBtn.addEventListener("click", (e) => {
     e.preventDefault();
     const perPageSelected = document.querySelector("#expense-opt");
@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     try {
         const page = 1;
         const perPageSelected = localStorage.getItem("perpage") || 2;
-        const expenses = await axios.get(`http://localhost:3000/expense/getExpense?page=${page} &perpage=${perPageSelected}`, { headers: { "authorization": token } });
+        const expenses = await axios.get(`http://13.231.114.220:3000/expense/getExpense?page=${page} &perpage=${perPageSelected}`, { headers: { "authorization": token } });
         if (expenses.data.isPremium == true) {
             localStorage.setItem("premiumuser", expenses.data.isPremium);
             premium.append(document.createTextNode("PREMIUM"))
@@ -66,7 +66,7 @@ function expenseDisplay(expense) {
 
 function deleteExpense(id, dltBtn) {
     if (confirm(`This action cannot to undone. are you sure?`)) {
-        axios.delete(`http://localhost:3000/expense/deleteExpense/${id}`, { headers: { "authorization": token } })
+        axios.delete(`http://13.231.114.220:3000/expense/deleteExpense/${id}`, { headers: { "authorization": token } })
             .then(() => {
                 const element = dltBtn.parentElement;
                 element.remove();
@@ -88,7 +88,7 @@ subBtn.addEventListener("click", (e) => {
         category: category
     };
 
-    axios.post("http://localhost:3000/expense/addExpense", expense, { headers: { "authorization": token } })
+    axios.post("http://13.231.114.220:3000/expense/addExpense", expense, { headers: { "authorization": token } })
         .then(res => {
             document.querySelector("#amount").value = "";
             document.querySelector("#description").value = "";
@@ -100,12 +100,12 @@ subBtn.addEventListener("click", (e) => {
 })
 
 premiumBtn.addEventListener("click", async (e) => {
-    const response = await axios.get("http://localhost:3000/get-premium/purchase-premium", { headers: { "authorization": token } });
+    const response = await axios.get("http://13.231.114.220:3000/get-premium/purchase-premium", { headers: { "authorization": token } });
     var options = {
         "key": response.data.key_id,
         "order_id": response.data.order.id,
         "handler": async function (response) {
-            const result = await axios.post("http://localhost:3000/get-premium/update-transaction-status", {
+            const result = await axios.post("http://13.231.114.220:3000/get-premium/update-transaction-status", {
                 order_id: options.order_id, payment_id: response.razorpay_payment_id
             }, { headers: { "authorization": token } })
             alert("You are now a premium user");
@@ -121,7 +121,7 @@ premiumBtn.addEventListener("click", async (e) => {
     rzrp1.open();
     e.preventDefault();
     rzrp1.on("payment.failed", () => {
-        axios.post("http://localhost:3000/get-premium/update-transaction-status", { order_id: response.data.order.id }, { headers: { "authorization": token } })
+        axios.post("http://13.231.114.220:3000/get-premium/update-transaction-status", { order_id: response.data.order.id }, { headers: { "authorization": token } })
         alert("something went wrong");
         rzrp1.close()
     })
@@ -130,7 +130,7 @@ premiumBtn.addEventListener("click", async (e) => {
 let leaderboardDisplayed = false;
 let leaderboardElements = [];
 
-axios.get("http://localhost:3000/premium/show-leaderboard", { headers: { "authorization": token } })
+axios.get("http://13.231.114.220:3000/premium/show-leaderboard", { headers: { "authorization": token } })
     .then(res => {
         for (let i = 0; i < res.data.length; i++) {
             const li = document.createElement("li");
@@ -164,7 +164,7 @@ leaderBoardBtn.addEventListener("click", (e) => {
 
 downloadReport.addEventListener("click", (e) => {
     e.preventDefault();
-    axios.get("http://localhost:3000/user/download-report", { headers: { "authorization": token } })
+    axios.get("http://13.231.114.220:3000/user/download-report", { headers: { "authorization": token } })
         .then((res) => {
             console.log(res.status)
             if (res.status == 200) {
@@ -184,7 +184,7 @@ downloadReport.addEventListener("click", (e) => {
 let fileauditdisplayed = false;
 let fileauditElements = [];
 
-axios.get("http://localhost:3000/premium/show-file-audit", { headers: { "authorization": token } })
+axios.get("http://13.231.114.220:3000/premium/show-file-audit", { headers: { "authorization": token } })
     .then(res => {
         for (let i = 0; i < res.data.FileAudit.length; i++) {
             const li = document.createElement("li");
@@ -290,9 +290,15 @@ function showPagination({currentPage, hasNextPage, nextPage, hasPreviousPage, pr
 
 async function getAllExpenses(page){
     const perPageSelected = localStorage.getItem("perpage") || 2;
-    const expenses = await axios.get(`http://localhost:3000/expense/getExpense?page=${page}&perpage=${perPageSelected}`, { headers: { "authorization": token } })
+    const expenses = await axios.get(`http://13.231.114.220:3000/expense/getExpense?page=${page}&perpage=${perPageSelected}`, { headers: { "authorization": token } })
         for(let i = 0; i < expenses.data.expenses.length; i++) {
             expenseDisplay(expenses.data.expenses[i]);
         }
         showPagination(expenses.data)
 }
+
+
+logOutBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    window.location.href = "./login.html";
+})

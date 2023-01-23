@@ -13,7 +13,7 @@ subBtn.addEventListener("click", (e) => {
         email: email,
         password: password
     }
-    axios.post("http://localhost:3000/user/signUp", details)
+    axios.post("http://13.231.114.220:3000/user/signUp", details)
         .then(() => {
             alert("signin successful. Please login")
             window.location.href = "./login.html";

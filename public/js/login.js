@@ -12,7 +12,7 @@ subBtn.addEventListener("click", (e) => {
         email: email,
         password: password
     }
-    axios.post("http://localhost:3000/user/login", details)
+    axios.post("http://13.231.114.220:3000/user/login", details)
         .then((res) => {
             alert(res.data.message);
             localStorage.setItem("token", res.data.token);
