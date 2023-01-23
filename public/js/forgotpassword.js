@@ -1,4 +1,5 @@
 const forgotPasswordSubmit = document.querySelector("#forgot-password-submit-btn");
+const resetSubmitBtn = document.querySelector(".reset-submit")
 
 
 forgotPasswordSubmit.addEventListener("click", (e) => {
@@ -7,7 +8,7 @@ forgotPasswordSubmit.addEventListener("click", (e) => {
     const details = {
         email : email
     }
-    axios.post("http://13.231.114.220:3000/password/forgotpassword", details)
+    axios.post("http://35.76.210.189:3000/password/forgotpassword", details)
     .then(res => {
         const a = document.querySelector(".password-reset-link");
         a.href = res.data.link;
