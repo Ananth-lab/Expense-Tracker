@@ -115,5 +115,4 @@ sequelize.sync()
   })
   .catch(error => {
     console.log("error is ", error)
-    console.log(process.env.DATABASE_PASSWORD || 3000)
   })

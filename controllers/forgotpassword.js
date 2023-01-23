@@ -26,7 +26,7 @@ exports.forgotPassword = async (req, res, next) => {
                 from: 'anantharajabk@gmail.com',
                 subject: 'Sending with SendGrid is Fun',
                 text: 'and easy to do anywhere, even with Node.js',
-                html: `http://35.76.210.189:3000/password/resetpassword/${id}`
+                html: `http://35.76.210.189/password/resetpassword/${id}`
             }
             // sgMail
             //     .send(msg)
@@ -88,8 +88,8 @@ exports.updatePassword = async (req, res, next) => {
                                 user.update({ password: hash })
                                     .then(() => {
                                         res.status(201).json({ message: "Password updated succesfully please relogin" });
-                                        //        res.redirect("http://35.76.210.189:3000/html/login.html");
-                                        //         res.status(201).json({ message: "Password updated succesfully" }).redirect("http://35.76.210.189:3000/html/login.html");
+                                        //        res.redirect("http://35.76.210.189/html/login.html");
+                                        //         res.status(201).json({ message: "Password updated succesfully" }).redirect("http://35.76.210.189/html/login.html");
                                     })
                             })
                         })
