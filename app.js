@@ -71,6 +71,7 @@ app.use("/premium", premiumRoutes);
 // app.use(helmet());
 
 app.use((req,res) => {
+  console.log("request successfull")
   res.sendFile(path.join(__dirname, `public/${req.url}`))
 })
 
