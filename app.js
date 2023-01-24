@@ -4,7 +4,7 @@ const cors = require("cors");
 
 const devenv = require('dotenv');
 
-const helmet = require("helmet");
+//const helmet = require("helmet");
 
 const fs = require("fs");
 
@@ -71,7 +71,6 @@ app.use("/premium", premiumRoutes);
 // app.use(helmet());
 
 app.use((req,res) => {
-  console.log("request successfull")
   res.sendFile(path.join(__dirname, `public/${req.url}`))
 })
 
@@ -115,5 +114,4 @@ sequelize.sync()
   })
   .catch(error => {
     console.log("error is ", error)
-    console.log(process.env.DATABASE_PASSWORD || 3000)
   })
