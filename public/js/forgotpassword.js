@@ -8,7 +8,7 @@ forgotPasswordSubmit.addEventListener("click", (e) => {
     const details = {
         email : email
     }
-    axios.post("http://35.76.210.189:3000/password/forgotpassword", details)
+    axios.post("http://localhost:3000/password/forgotpassword", details)
     .then(res => {
         const a = document.querySelector(".password-reset-link");
         a.href = res.data.link;
