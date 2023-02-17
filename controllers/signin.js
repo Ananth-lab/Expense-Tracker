@@ -7,12 +7,13 @@ exports.SignUpController = async (req, res, next) => {
         const cycles = 10;
         bcrypt.hash(req.body.password, cycles, async (err, hash) => {
             try {
-                const user = await User.create({
+                const user = new User({
                     username: req.body.username,
                     email: req.body.email,
                     password: hash,
                     ispremiumuser : false
                 })
+                await user.save()
                 res.status(200).json({ newuser: user });
             }
             catch (error) {

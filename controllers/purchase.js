@@ -1,5 +1,7 @@
 const Order = require("../models/order");
 
+const User = require("../models/user");
+
 const RazorPay = require("razorpay");
 
 const jwt = require("jsonwebtoken");
@@ -16,12 +18,13 @@ exports.getPremium = async (req, res, next) => {
             key_id : process.env.RAZORPAY_KEY_ID,
             key_secret : process.env.RAZORPAY_KEY_SECRET
         })
-        const amount = 250;
+        const amount = 2500;
         rzr.orders.create({amount, currency : "INR"}, (error, order) => {
             if(error){
                 throw new Error(JSON.stringify(error))
             }
-            req.user.createOrder({orderId : order.id, status : "PENDING" })
+            const doc = new Order({orderId : order.id, status : "PENDING" })
+            doc.save()
             .then(() => {
                 return res.status(201).json({order,key_id : rzr.key_id})
             })
@@ -35,14 +38,16 @@ exports.getPremium = async (req, res, next) => {
 exports.updateStatus = async (req, res, next) => {
     try {
         if(!req.body.payment_id){
-            const order = await Order.findOne({where : {orderId : req.body.order_id}});
-            await order.update({status : "FAILURE"});
+            const order = await Order.findOne({orderId : order_id});
+            await order.updateOne({status : "FAILURE"});
             return res.status(501).json({success : false, message : "Transaction failed"}) 
         }
         const {order_id, payment_id} = req.body;
-        const order = await Order.findOne({where : {orderId : order_id}})
-        await order.update({paymentId : payment_id, status : "SUCCESSFUL"})
-        await req.user.update({ispremiumuser : true})
+        const order = await Order.findOne({orderId : order_id})
+        await order.updateOne({paymentId : payment_id, status : "SUCCESSFUL"});
+        const user = User.findOne({_id : req.user._id});
+        await user.updateOne({isPremiumuser : true})
+        //await req.user.update({ispremiumuser : true})
         return res.status(201).json({success : true, message : "Transaction successful", token : generateAccessToken(req.user.id, true)})
     }
     catch(error) {

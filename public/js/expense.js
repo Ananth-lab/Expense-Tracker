@@ -60,7 +60,7 @@ function expenseDisplay(expense) {
     ul.appendChild(li);
     dltBtn.addEventListener("click", (e) => {
         e.preventDefault();
-        deleteExpense(expense.id, dltBtn)
+        deleteExpense(expense._id, dltBtn)
     })
 }
 
@@ -93,7 +93,7 @@ subBtn.addEventListener("click", (e) => {
             document.querySelector("#amount").value = "";
             document.querySelector("#description").value = "";
             document.querySelector("#category").value = "";
-            expense.id = res.data.expense.id;
+            expense._id = res.data.expense._id;
             expenseDisplay(expense)
         })
         .catch(err => console.log(err))
@@ -166,7 +166,6 @@ downloadReport.addEventListener("click", (e) => {
     e.preventDefault();
     axios.get("http://localhost:3000/user/download-report", { headers: { "authorization": token } })
         .then((res) => {
-            console.log(res.status)
             if (res.status == 200) {
                 var a = document.createElement("a");
                 a.href = res.data.fileURL;
@@ -189,7 +188,6 @@ axios.get("http://localhost:3000/premium/show-file-audit", { headers: { "authori
         for (let i = 0; i < res.data.FileAudit.length; i++) {
             const li = document.createElement("li");
             li.className = "file-audit-list"
-            li.appendChild(document.createTextNode(` Date : ${res.data.FileAudit[i].createdAt} `));
             const a = document.createElement("a");
             a.className = "file-link"
             a.href = res.data.FileAudit[i].url;
@@ -227,7 +225,6 @@ function showPagination({currentPage, hasNextPage, nextPage, hasPreviousPage, pr
         button1.className = "pagination-btn";
         button1.addEventListener('click', (e) => {
             e.preventDefault()
-            console.log(expenseLists)
             expenseLists.innerHTML = "";
             getAllExpenses(1);
         })

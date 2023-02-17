@@ -4,18 +4,18 @@ const S3Services = require("../services/s3");
 
 const FileAudit = require("../models/fileaudit");
 
-// const userServices = require("../services/user")
 
 
 
 exports.addExpense = async (req, res, next) => {
     try {
-        const expense = await Expense.create({
+        const expense = new Expense({
             amount: req.body.amount,
             description: req.body.description,
             category: req.body.category,
             userId: req.user.id
         });
+        await expense.save();
         res.status(201).json({ expense: expense })
     }
     catch (error) {
@@ -28,17 +28,15 @@ exports.getExpense = async (req, res, next) => {
     try {
         const expensesPerPage = req.query.perpage * 1;
          const page = +req.query.page || 1;
-         const totalExp = await req.user.getExpenses(); //we can findout length 
-
-         const expenses = await req.user.getExpenses({
-            offset : (page - 1) * expensesPerPage,
-            limit : expensesPerPage
-         });
+         const totalExp = await Expense.find({userId : req.user._id})
+         const expenses = await Expense.find({ userId: req.user._id })
+         .skip((page - 1) * expensesPerPage)
+         .limit(expensesPerPage);
 
          return res.status(200).json({ 
             success: true,
             expenses ,
-            isPremium: req.user.ispremiumuser,
+            isPremium: req.user.isPremiumuser,
             name: req.user.name,
             currentPage: page,
             hasNextPage: expensesPerPage * page < totalExp.length,
@@ -56,9 +54,10 @@ exports.getExpense = async (req, res, next) => {
 
 exports.deleteExpense = async (req, res, next) => {
     try {
-        const expense = await Expense.findOne({ where: { id: req.params.id, userId: req.user.id } });
+        const expense = await Expense.findOne({_id: req.params.id, userId: req.user._id });
+        console.log(expense)
         if (expense) {
-            expense.destroy();
+            expense.remove();
             return res.status(201).json({ message: "expense removed" })
         }
         else {
@@ -73,13 +72,14 @@ exports.deleteExpense = async (req, res, next) => {
 
 exports.downloadReport = async (req, res, next) => {
     try {
-        const expenses = await req.user.getExpenses()
+        const expenses = await Expense.find({userId : req.user._id})
         const stringifiedExpense = JSON.stringify(expenses);
-        const userId = req.user.id;
+        const userId = req.user._id;
         const filename = `Expense.txt${userId}${new Date()}`;
         const fileURL = await S3Services.uploadToS3(stringifiedExpense, filename);
         if (fileURL) {
-            await FileAudit.create({ userId: req.user.id, url: fileURL })
+           const document = new FileAudit({ userId: req.user._id, url: fileURL });
+           await document.save()
         }
         res.status(200).json({ fileURL, success: true })
     }

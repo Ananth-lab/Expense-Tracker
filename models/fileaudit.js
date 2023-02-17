@@ -1,12 +1,17 @@
-const Sequelize = require("sequelize");
+const mongoose = require("mongoose");
 
-const sequelize = require('../utils/database');
+const Schema = mongoose.Schema;
 
-const FileAudit = sequelize.define("fileaudit", {
+
+const fileAuditSchema = new Schema({
     url : {
-        type : Sequelize.STRING
+        type : String
+    },
+    userId : {
+        type : Schema.Types.ObjectId,
+        ref : "User"
     }
-});
+})
 
+module.exports = mongoose.model("FileAudit", fileAuditSchema)
 
-module.exports = FileAudit
