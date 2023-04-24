@@ -106,7 +106,7 @@ User.hasMany(FileAudit, {
 
 FileAudit.belongsTo(User);
 
-sequelize.sync()
+sequelize.sync({force : false})
   .then(() => {
     // https.createServer({ key: privateKey, cert: certificate }, app)
     //   .listen(process.env.PORT || 3000)
